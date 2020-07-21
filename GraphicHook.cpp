@@ -29,11 +29,11 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 void InitImGui(IDirect3DDevice9* pDevice)
 {
     D3DDEVICE_CREATION_PARAMETERS parameters;
-	pDevice->GetCreationParameters(&parameters);
+    pDevice->GetCreationParameters(&parameters);
 
     HWND window = parameters.hFocusWindow;
-
     originalWndProc = (WNDPROC)SetWindowLongPtr(window, GWLP_WNDPROC, (LONG_PTR)WndProc);
+
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
@@ -76,7 +76,7 @@ HRESULT __stdcall hookedEndScene(IDirect3DDevice9* pDevice) //A function contain
 
 void hookEndScene() {
     uintptr_t shaderapidx9 = reinterpret_cast<uintptr_t>(GetModuleHandle("shaderapidx9.dll"));
-	IDirect3DDevice9* pDevice = *reinterpret_cast<IDirect3DDevice9**>(shaderapidx9 + dwppDirect3DDevice9);
+    IDirect3DDevice9* pDevice = *reinterpret_cast<IDirect3DDevice9**>(shaderapidx9 + dwppDirect3DDevice9);
 
     void** vTable = *reinterpret_cast<void***>(pDevice);
 
